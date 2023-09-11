@@ -3,7 +3,10 @@
 #ifdef TESTING_ENV
     test_uart_in();
     test_uart_out();
-struct device {};
+struct device {
+    char uart_in;
+    char uart_out;
+};
 #else
     uart_poll_in();
     uart_poll_out();

@@ -3,12 +3,13 @@
 
 #define TESTING_ENV 1
 
-test_uart_in()
+void test_uart_in(const struct device *dev, char *byte)
 {
-
+    byte = dev->uart_in;
+    byte++;
 }
 
-test_uart_out()
+void test_uart_out(const struct device *dev, char up)
 {
-
+    dev->uart_out = up;
 }
