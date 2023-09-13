@@ -4,22 +4,43 @@
 
 #define TESTING_ENV 1
 
-struct mock_device glbl_dev;
-char *TEST_STRING = "HelloWorld!\n";
+char *TEST_IN = "Hello World!\n";
+char *TEST_OUT = "HELLO WORLD!\n";
 
-void test_uart_in(const struct mock_device *dev, char *byte)
+char *mock_uart_in;
+char *mock_uart_out;
+
+void test_uart_in(char *byte)
 {
-    byte = dev->uart_in;
-    byte++;
+    // byte is an output, so set the output and increment our input string.
+    *byte = *mock_uart_in;
+    if (*mock_uart_in == '\n')
+    {
+        // why this?
+        mock_uart_in = TEST_IN;
+    }
+    else
+    {
+        mock_uart_in++;
+    }
 }
 
-void test_uart_out(struct mock_device *dev, char up)
+void test_uart_out(char up)
 {
-    dev->uart_out = up;
+    *mock_uart_out = up;
+    mock_uart_out++;
 }
 
-void setUp(void) 
+void test_echo_uppercase()
 {
+    // pass in struct, initializing everything to 0
+    echo_uppercase_conditional((struct device *) 0);
+}
+
+void setUp(void)
+{
+    mock_uart_in = TEST_IN;
+    // mock_uart_out = TEST_OUT;
 }
 
 void tearDown(void) {}
@@ -27,15 +48,11 @@ void tearDown(void) {}
 int main (void)
 {
     UNITY_BEGIN();
-    // todo: use TEST_STRING  instead of single character
 
-    glbl_dev.uart_in = 'c';
-    char byte = '1';
-    RUN_TEST(test_uart_in(glbl_dev, &byte));
-    TEST_ASSERT_EQUAL_CHAR(byte, 'c');
-
-    RUN_TEST(test_uart_out(glbl_dev, byte));
-    TEST_ASSERT_EQUAL_CHAR(glbl_dev0->uart_out, 'c');
+    RUN_TEST(test_echo_uppercase);
+    
+    TEST_ASSERT_EQUAL_CHAR(mock_uart_in, TEST_IN);
+    TEST_ASSERT_EQUAL_CHAR(mock_uart_out, TEST_OUT);
 
     return UNITY_END();
 }

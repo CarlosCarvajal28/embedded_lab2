@@ -1,13 +1,13 @@
 #include "uart_cond.h"
 
-void echo_uppercase(const struct device *dev)
+void echo_uppercase_conditional(const struct device *dev)
 {
     char byte, up;
 
     do {
         // Get Input
         #ifdef TESTING_ENV
-        test_uart_in(dev, &byte)
+        test_uart_in(&byte);
         #else
         if (uart_poll_in(dev, &byte) != 0) {
             continue;
@@ -22,7 +22,7 @@ void echo_uppercase(const struct device *dev)
 
         // Set Output
         #ifdef TESTING_ENV
-        test_uart_out(dev, up);
+        test_uart_out(up);
         #else
         uart_poll_out(dev, up);
         #endif
