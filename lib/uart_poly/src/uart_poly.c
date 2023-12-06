@@ -1,12 +1,14 @@
 #include "uart_poly.h"
 
-void echo_uppercase(const struct device *dev)
+void echo_uppercase_ptr(const struct device *dev,
+                        int (*uart_in)(const struct device *, char *),
+                        void (*uart_out)(const struct device *, char))
 {
     char byte, up;
 
     do {
         // Get Input
-        if (uart_poll_in(dev, &byte) != 0) {
+        if (uart_in(dev, &byte) != 0) {
             continue;
         }
 
@@ -17,6 +19,6 @@ void echo_uppercase(const struct device *dev)
             up = byte;
 
         // Set Output
-        uart_poll_out(dev, up);
+        uart_out(dev, up);
     } while(byte != '\n');
 }

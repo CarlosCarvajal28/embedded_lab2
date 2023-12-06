@@ -27,11 +27,10 @@ void test_uart_in(char *byte)
 
 void test_uart_out(char up)
 {
-    *mock_uart_out = up;
-    mock_uart_out++;
+    TEST_ASSERT_EQUAL_CHAR(*mock_uart_out++, up);
 }
 
-void test_echo_uppercase()
+void test_echo_cond()
 {
     // pass in struct, initializing everything to 0
     echo_uppercase_conditional((struct device *) 0);
@@ -49,10 +48,7 @@ int main (void)
 {
     UNITY_BEGIN();
 
-    RUN_TEST(test_echo_uppercase);
-    
-    TEST_ASSERT_EQUAL_CHAR(mock_uart_in, TEST_IN);
-    TEST_ASSERT_EQUAL_CHAR(mock_uart_out, TEST_OUT);
+    RUN_TEST(test_echo_cond);
 
     return UNITY_END();
 }

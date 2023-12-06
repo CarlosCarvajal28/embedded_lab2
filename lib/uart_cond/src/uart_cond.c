@@ -6,12 +6,12 @@ void echo_uppercase_conditional(const struct device *dev)
 
     do {
         // Get Input
-        #ifdef TESTING_ENV
-        test_uart_in(&byte);
-        #else
+        #ifndef TESTING_ENV
         if (uart_poll_in(dev, &byte) != 0) {
             continue;
         }
+        #else
+        test_uart_in(&byte);
         #endif
 
         // Make uppercase
