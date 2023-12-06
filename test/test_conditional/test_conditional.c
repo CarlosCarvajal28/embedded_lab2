@@ -2,8 +2,6 @@
 #include <unity.h>
 #include "uart_cond.h"
 
-#define TESTING_ENV
-
 char *TEST_IN = "Hello World!\n";
 char *TEST_OUT = "HELLO WORLD!\n";
 
