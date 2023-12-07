@@ -14,7 +14,6 @@ void test_uart_in(char *byte)
     *byte = *mock_uart_in;
     if (*mock_uart_in == '\n')
     {
-        // why this?
         mock_uart_in = TEST_IN;
     }
     else
@@ -37,7 +36,7 @@ void test_echo_cond()
 void setUp(void)
 {
     mock_uart_in = TEST_IN;
-    // mock_uart_out = TEST_OUT;
+    mock_uart_out = TEST_OUT;
 }
 
 void tearDown(void) {}

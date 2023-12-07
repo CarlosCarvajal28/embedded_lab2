@@ -2,8 +2,7 @@
 #include <unity.h>
 #include "uart_poly.h"
 
-
-char *TEST_IN = "Hello World!\n";
+char *TEST_IN = "hello world!\n";
 char *TEST_OUT = "HELLO WORLD!\n";
 
 char *mock_uart_in;
@@ -26,8 +25,7 @@ int test_uart_in( const struct device* dev, char *byte)
 
 void test_uart_out(const struct device *dev, char up)
 {
-    *mock_uart_out = up;
-    mock_uart_out++;
+    TEST_ASSERT_EQUAL_CHAR(*mock_uart_out++, up);
 }
 
 void test_echo_ptr()
